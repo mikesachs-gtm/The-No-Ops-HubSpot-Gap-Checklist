@@ -730,7 +730,7 @@
           <p class="hero-lead">A 20–30 minute, evidence-led self-assessment for teams running HubSpot without a dedicated RevOps, SalesOps, or MarketingOps owner.</p>
         </div>
         <aside class="hero-side">
-          <strong>Is HubSpot helping the business operate—or quietly exposing an ownership gap?</strong>
+          <strong>Is HubSpot helping the business operate, or quietly exposing an ownership gap?</strong>
           <p>Score what you can prove today using live records, dashboards, workflows, fields, reports, process documents, and team behaviour.</p>
           <div class="hero-meta">
             <span class="meta-chip">11 diagnostic areas</span>
@@ -758,7 +758,7 @@
         </div>
         <div class="intro-card">
           <h3>Why this matters</h3>
-          <p>HubSpot rarely breaks all at once. It drifts—and people compensate until the informal operating layer becomes the constraint.</p>
+          <p>HubSpot rarely breaks all at once. It drifts. People compensate until the informal operating layer becomes the constraint.</p>
           <div class="drift-list">
             <div class="drift-item"><span class="drift-index">01</span><p>Leaders stop trusting reports.</p></div>
             <div class="drift-item"><span class="drift-index">02</span><p>Managers cannot inspect pipeline without asking for the story.</p></div>
@@ -773,7 +773,7 @@
       <div class="section">
         <div class="section-kicker">The governing principle</div>
         <h2 class="section-title" id="principle-title">HubSpot is operational only when every important revenue process has four things.</h2>
-        <p class="section-intro">If one is missing, HubSpot may still be usable—but it is not yet governed.</p>
+        <p class="section-intro">If one is missing, HubSpot may still be usable, but it is not yet governed.</p>
         <div class="principle-grid">
           <article class="principle"><span class="principle-num">01 / ACCOUNTABILITY</span><h3>Owner</h3><p>Someone is accountable for the standard.</p></article>
           <article class="principle"><span class="principle-num">02 / CLARITY</span><h3>Standard</h3><p>The rule is clear enough for others to follow.</p></article>
@@ -785,14 +785,14 @@
 
     <section class="section assessment" id="assessment" aria-labelledby="assessment-title">
       <div class="section-kicker">The assessment</div>
-      <h2 class="section-title" id="assessment-title">Score what is true today—not what is intended.</h2>
+      <h2 class="section-title" id="assessment-title">Score what is true today, not what is intended.</h2>
       <p class="section-intro">Give a 3 only when you can point to an owner, standard, cadence, and inspectable evidence. Your answers and notes are saved in this browser.</p>
       <div class="assessment-layout">
         <div>
           <div class="scoring-key" aria-label="Scoring guide">
-            <div class="key-item"><strong>1 — Ad hoc</strong><span>Depends on memory, habits, spreadsheets, or manual checks.</span></div>
-            <div class="key-item"><strong>2 — Inconsistent</strong><span>Something exists, but ownership, adoption, evidence, or cadence is weak.</span></div>
-            <div class="key-item"><strong>3 — Governed</strong><span>Owner, standard, cadence, and evidence are all visible.</span></div>
+            <div class="key-item"><strong>1. Ad hoc</strong><span>Depends on memory, habits, spreadsheets, or manual checks.</span></div>
+            <div class="key-item"><strong>2. Inconsistent</strong><span>Something exists, but ownership, adoption, evidence, or cadence is weak.</span></div>
+            <div class="key-item"><strong>3. Governed</strong><span>Owner, standard, cadence, and evidence are all visible.</span></div>
           </div>
           <div id="areaList"></div>
         </div>
@@ -860,11 +860,11 @@
       <p class="section-intro">The fastest route to more drift is improving the visible surface while leaving the operating cause untouched.</p>
       <div class="failure-list">
         <div class="failure-row"><strong>Treating symptoms as tasks</strong><p>Ask which data, process, skills, or governance issue makes the dashboard wrong before rebuilding it.</p></div>
-        <div class="failure-row"><strong>Auditing against generic best practice</strong><p>Audit against the actual strategy, sales motion, customer journey, and decisions—not a universal setup.</p></div>
+        <div class="failure-row"><strong>Auditing against generic best practice</strong><p>Audit against the actual strategy, sales motion, customer journey, and decisions, not a universal setup.</p></div>
         <div class="failure-row"><strong>Giving maturity for intention</strong><p>Score only what is documented, used, reviewed, and inspectable.</p></div>
         <div class="failure-row"><strong>Fixing reporting before data</strong><p>Govern fields, lifecycle definitions, ownership, and source rules before rebuilding dashboards.</p></div>
         <div class="failure-row"><strong>Over-automating unclear process</strong><p>Define the process before adding workflows around it.</p></div>
-        <div class="failure-row"><strong>Ignoring the manager layer</strong><p>Build manager views, cadence, and evidence standards—not only leadership dashboards.</p></div>
+        <div class="failure-row"><strong>Ignoring the manager layer</strong><p>Build manager views, cadence, and evidence standards, not only leadership dashboards.</p></div>
         <div class="failure-row"><strong>Treating AI as the shortcut</strong><p>Improve input quality, process clarity, and human review before adding AI support.</p></div>
       </div>
     </section>
@@ -873,7 +873,7 @@
       <div class="next-step-panel">
         <div class="next-step-copy">
           <div class="section-kicker">What to do next</div>
-          <h2 id="next-title">Fix the operating gap—not just the visible symptom.</h2>
+          <h2 id="next-title">Fix the operating gap, not just the visible symptom.</h2>
           <p>Rebuilding a dashboard will not make weak source data trustworthy. More automation will not repair an undefined process.</p>
           <div class="next-step-recommendation"><strong id="nextStepTitle">Complete the checklist first.</strong><span id="nextStepCopy">Your recommended next step will update as you score the assessment.</span></div>
         </div>
@@ -1090,7 +1090,7 @@
             <div class="area-panel" id="area-panel-${index}">
               <span class="score-label">Choose the statement that best matches today</span>
               <div class="score-buttons" role="group" aria-label="Score ${escapeHtml(area.title)}">
-                ${[1,2,3].map(score => `<button class="score-button" type="button" data-score-choice="${score}" aria-pressed="${String(savedScore) === String(score)}">${score} — ${score === 1 ? "Ad hoc" : score === 2 ? "Inconsistent" : "Governed"}</button>`).join("")}
+                ${[1,2,3].map(score => `<button class="score-button" type="button" data-score-choice="${score}" aria-pressed="${String(savedScore) === String(score)}">${score}. ${score === 1 ? "Ad hoc" : score === 2 ? "Inconsistent" : "Governed"}</button>`).join("")}
                 <button class="score-button" type="button" data-score-choice="na" aria-pressed="${savedScore === "na"}">N/A</button>
               </div>
               <div class="evidence-guide">${evidence}</div>
@@ -1155,7 +1155,7 @@
       const result = document.getElementById("flagResult");
       result.textContent = count === 0
         ? "No critical red flags selected."
-        : `${count} critical red flag${count === 1 ? "" : "s"} selected — the total score matters less; deeper inspection is warranted.`;
+        : `${count} critical red flag${count === 1 ? "" : "s"} selected. The total score matters less; deeper inspection is warranted.`;
     }
 
     function updateSummary() {
@@ -1203,7 +1203,7 @@
         nextTitle.textContent = "Prioritise the 2–3 lowest areas.";
         nextCopy.textContent = "Confirm whether the cause is technology, process, skills, or governance before fixing symptoms.";
       } else if (percent <= 89) {
-        resultTitle.textContent = "Operational—with gaps";
+        resultTitle.textContent = "Operational, with gaps";
         resultCopy.textContent = "HubSpot works in several areas, but gaps may still create reporting, handoff, or scalability risk.";
         nextTitle.textContent = "Run a focused review.";
         nextCopy.textContent = "Start with the lowest-scoring areas and any critical red flags, even if the total looks healthy.";
