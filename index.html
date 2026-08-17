@@ -31,26 +31,37 @@
         firstScript.parentNode.insertBefore(gtmScript, firstScript);
       }
 
+      function hasRecordedCookiePreferences() {
+        return document.cookie.split(";").some(function (cookie) {
+          var name = cookie.trim().split("=")[0];
+          return name === "__hs_cookie_cat_pref" || name === "_hs_cookie_cat_pref";
+        });
+      }
+
       var _hsp = window._hsp = window._hsp || [];
       _hsp.push(["addPrivacyConsentListener", function (consent) {
-        var categories = consent && consent.categories ? consent.categories : {};
-        var hasAnalyticsConsent = categories.analytics === true;
-        var hasAdsConsent = categories.advertisement === true;
+        window.setTimeout(function () {
+          var categories = consent && consent.categories ? consent.categories : {};
+          var hasRecordedPreferences = hasRecordedCookiePreferences();
+          var hasAnalyticsConsent = hasRecordedPreferences && categories.analytics === true;
+          var hasAdsConsent = hasRecordedPreferences && categories.advertisement === true;
 
-        window.gtag("consent", "update", {
-          analytics_storage: hasAnalyticsConsent ? "granted" : "denied",
-          ad_storage: hasAdsConsent ? "granted" : "denied",
-          ad_user_data: hasAdsConsent ? "granted" : "denied",
-          ad_personalization: hasAdsConsent ? "granted" : "denied"
-        });
+          window.gtag("consent", "update", {
+            analytics_storage: hasAnalyticsConsent ? "granted" : "denied",
+            ad_storage: hasAdsConsent ? "granted" : "denied",
+            ad_user_data: hasAdsConsent ? "granted" : "denied",
+            ad_personalization: hasAdsConsent ? "granted" : "denied"
+          });
 
-        if (hasAdsConsent) loadApolloContainer();
+          if (hasAdsConsent) loadApolloContainer();
 
-        window.dataLayer.push({
-          event: "hubspotConsentUpdate",
-          hubspot_consent_analytics: hasAnalyticsConsent,
-          hubspot_consent_advertisement: hasAdsConsent
-        });
+          window.dataLayer.push({
+            event: "hubspotConsentUpdate",
+            hubspot_consent_recorded: hasRecordedPreferences,
+            hubspot_consent_analytics: hasAnalyticsConsent,
+            hubspot_consent_advertisement: hasAdsConsent
+          });
+        }, 0);
       }]);
     })(window, document);
   </script>

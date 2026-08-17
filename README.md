@@ -25,7 +25,7 @@ The site uses a consent-first tracking model:
 
 - HubSpot portal `27209634` is installed directly so its consent banner can load on the external domain.
 - Google Consent Mode v2 defaults analytics and advertising consent to denied.
-- Google Tag Manager container `GTM-KNVS78KV` is requested only after the HubSpot `advertisement` category is explicitly granted.
+- Google Tag Manager container `GTM-KNVS78KV` is requested only after HubSpot has stored a cookie-category preference and the `advertisement` category is explicitly granted.
 - The GTM container currently contains only the Apollo visitor tracker.
 - Consent changes are published to the data layer as `hubspotConsentUpdate`.
 - A Cookie settings control in the footer reopens the HubSpot banner.
