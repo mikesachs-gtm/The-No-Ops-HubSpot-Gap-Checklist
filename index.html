@@ -1,0 +1,1181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A practical, evidence-led self-assessment for teams running HubSpot without a dedicated operations owner.">
+  <title>The No-Ops HubSpot Gap Checklist | GTM Diagnostics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal: #00D0B4;
+      --teal-dark: #008F7D;
+      --teal-soft: #DDFBF6;
+      --navy: #0F172A;
+      --navy-2: #17233D;
+      --ink: #172033;
+      --muted: #637087;
+      --paper: #F7FAF9;
+      --white: #FFFFFF;
+      --line: #DCE5E3;
+      --red: #C54848;
+      --red-soft: #FFF0EE;
+      --amber: #A96700;
+      --amber-soft: #FFF7E8;
+      --green-soft: #E8F8F2;
+      --shadow: 0 22px 60px rgba(15, 23, 42, .10);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, textarea { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; }
+    h1, h2, h3, h4, p { margin-top: 0; }
+    h1, h2, h3, .brand, .eyebrow, .area-number, .stat-value {
+      font-family: Montserrat, Arial, sans-serif;
+    }
+    :focus-visible { outline: 3px solid rgba(0, 208, 180, .52); outline-offset: 3px; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(15, 23, 42, .96);
+      color: var(--white);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .topbar-inner {
+      width: min(1180px, calc(100% - 36px));
+      min-height: 68px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--teal);
+      border-radius: 8px;
+      color: var(--teal);
+      transform: rotate(-8deg);
+      font-size: .72rem;
+    }
+    .top-actions { display: flex; gap: 10px; }
+    .button {
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-weight: 700;
+      line-height: 1;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+    .button:hover { transform: translateY(-1px); }
+    .button-secondary {
+      background: transparent;
+      color: var(--white);
+      border-color: rgba(255,255,255,.3);
+    }
+    .button-primary { background: var(--teal); color: var(--navy); }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: var(--navy);
+      color: var(--white);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: linear-gradient(to bottom, black, transparent 88%);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      right: -170px;
+      top: -220px;
+      border: 92px solid rgba(0,208,180,.1);
+      border-radius: 50%;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 92px 0 82px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(300px, .75fr);
+      gap: 72px;
+      align-items: end;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      color: var(--teal);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 28px; height: 2px; background: currentColor; }
+    h1 {
+      max-width: 830px;
+      margin-bottom: 24px;
+      font-size: clamp(2.55rem, 6.4vw, 5.9rem);
+      line-height: .98;
+      letter-spacing: -.055em;
+    }
+    .hero-lead {
+      max-width: 720px;
+      margin-bottom: 0;
+      color: #D9E2F0;
+      font-size: clamp(1.05rem, 1.8vw, 1.28rem);
+    }
+    .hero-side {
+      padding-left: 26px;
+      border-left: 2px solid var(--teal);
+    }
+    .hero-side strong { display: block; margin-bottom: 12px; font-size: 1.08rem; }
+    .hero-side p { color: #B8C4D7; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 24px; }
+    .meta-chip {
+      padding: 7px 11px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      color: #E7EDF7;
+      font-size: .8rem;
+    }
+
+    .section {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 84px 0;
+    }
+    .section-kicker {
+      margin-bottom: 10px;
+      color: var(--teal-dark);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .section-title {
+      max-width: 820px;
+      margin-bottom: 16px;
+      color: var(--navy);
+      font-size: clamp(1.8rem, 3vw, 3.05rem);
+      line-height: 1.12;
+      letter-spacing: -.035em;
+    }
+    .section-intro { max-width: 760px; margin-bottom: 42px; color: var(--muted); font-size: 1.05rem; }
+
+    .use-grid {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 28px;
+      align-items: start;
+    }
+    .intro-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: 0 12px 35px rgba(15,23,42,.055);
+    }
+    .intro-card h3 { margin-bottom: 10px; color: var(--navy); font-size: 1.2rem; }
+    .intro-card p:last-child { margin-bottom: 0; }
+    .participant-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+    .participant {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--navy);
+      font-weight: 600;
+      font-size: .92rem;
+    }
+    .participant::before {
+      content: "✓";
+      flex: 0 0 24px;
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--teal-soft);
+      color: var(--teal-dark);
+      font-size: .75rem;
+      font-weight: 800;
+    }
+    .drift-list { display: grid; gap: 14px; margin-top: 20px; }
+    .drift-item {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .drift-item:last-child { border-bottom: 0; }
+    .drift-index {
+      font-family: Montserrat, sans-serif;
+      font-weight: 800;
+      color: var(--teal-dark);
+      font-size: .77rem;
+    }
+    .drift-item p { margin: 0; color: var(--navy); font-weight: 600; }
+
+    .principle-band { background: var(--navy); color: var(--white); }
+    .principle-band .section-title { color: var(--white); }
+    .principle-band .section-intro { color: #B7C3D6; }
+    .principle-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,.13);
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .principle {
+      min-height: 225px;
+      padding: 28px;
+      background: var(--navy-2);
+    }
+    .principle-num { color: var(--teal); font-family: Montserrat, sans-serif; font-size: .74rem; font-weight: 800; letter-spacing: .12em; }
+    .principle h3 { margin: 58px 0 12px; font-size: 1.35rem; }
+    .principle p { margin: 0; color: #B7C3D6; font-size: .92rem; }
+
+    .assessment { padding-bottom: 110px; }
+    .assessment-layout {
+      display: block;
+    }
+    .score-panel {
+      position: relative;
+      margin-top: 30px;
+      padding: 32px;
+      display: grid;
+      grid-template-columns: minmax(220px, 1.1fr) 180px minmax(260px, .9fr);
+      grid-template-areas:
+        "intro gauge stats"
+        "result gauge completion"
+        "result gauge action";
+      gap: 18px 32px;
+      align-items: center;
+      background: var(--navy);
+      color: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .score-panel h3 { margin-bottom: 6px; font-size: 1.05rem; }
+    .score-panel > div:first-child { grid-area: intro; }
+    .score-panel > div:first-child p { margin: 0; color: #AEBBD0; font-size: .86rem; }
+    .score-gauge {
+      --progress: 0deg;
+      width: 166px;
+      height: 166px;
+      grid-area: gauge;
+      margin: 0 auto;
+      display: grid;
+      place-items: center;
+      position: relative;
+      border-radius: 50%;
+      background: conic-gradient(var(--teal) var(--progress), rgba(255,255,255,.12) 0);
+    }
+    .score-gauge::after {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      background: var(--navy);
+    }
+    .score-gauge-value { position: relative; z-index: 1; text-align: center; }
+    .score-gauge-value strong { display: block; font: 800 2.45rem/1 Montserrat, sans-serif; }
+    .score-gauge-value span { color: #AEBBD0; font-size: .78rem; }
+    .score-stats { grid-area: stats; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0; }
+    .score-stat { padding: 12px 8px; text-align: center; background: rgba(255,255,255,.06); border-radius: 12px; }
+    .score-stat strong { display: block; color: var(--teal); font: 800 1.25rem Montserrat, sans-serif; }
+    .score-stat span { color: #AEBBD0; font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; }
+    .score-result { grid-area: result; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.13); }
+    .score-result strong { display: block; margin-bottom: 5px; color: var(--teal); }
+    .score-result p { margin: 0; color: #D1D9E6; font-size: .85rem; }
+    .completion { grid-area: completion; margin: 0; }
+    .completion-row { display: flex; justify-content: space-between; color: #AEBBD0; font-size: .75rem; }
+    .completion-bar { height: 5px; margin-top: 7px; overflow: hidden; border-radius: 5px; background: rgba(255,255,255,.12); }
+    .completion-fill { width: 0; height: 100%; background: var(--teal); transition: width .25s ease; }
+    .pdf-action { grid-area: action; text-align: right; }
+    .pdf-action .button { width: 100%; margin: 0; }
+    .pdf-action small { display: block; margin-top: 8px; color: #AEBBD0; font-size: .72rem; line-height: 1.4; }
+
+    .scoring-key {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .key-item { padding: 13px; border-radius: 14px; border: 1px solid var(--line); background: var(--white); }
+    .key-item strong { display: block; color: var(--navy); font-family: Montserrat, sans-serif; }
+    .key-item span { color: var(--muted); font-size: .77rem; }
+
+    .area-card {
+      margin-bottom: 14px;
+      overflow: hidden;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .area-card[data-score="1"] { border-left: 5px solid var(--red); }
+    .area-card[data-score="2"] { border-left: 5px solid #E4A83A; }
+    .area-card[data-score="3"] { border-left: 5px solid var(--teal-dark); }
+    .area-card.open { box-shadow: 0 18px 42px rgba(15,23,42,.07); }
+    .area-header {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr) auto 26px;
+      gap: 16px;
+      align-items: center;
+      padding: 22px;
+      text-align: left;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+    }
+    .area-number {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--navy);
+      color: var(--teal);
+      font-weight: 800;
+    }
+    .area-heading h3 { margin: 0 0 3px; color: var(--navy); font-size: 1rem; }
+    .area-heading p { margin: 0; color: var(--muted); font-size: .86rem; line-height: 1.45; }
+    .area-status {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #EEF2F4;
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .area-card[data-score="1"] .area-status { background: var(--red-soft); color: var(--red); }
+    .area-card[data-score="2"] .area-status { background: var(--amber-soft); color: var(--amber); }
+    .area-card[data-score="3"] .area-status { background: var(--green-soft); color: #167460; }
+    .chevron { color: var(--muted); font-size: 1.25rem; transition: transform .2s ease; }
+    .area-card.open .chevron { transform: rotate(180deg); }
+    .area-panel { display: none; padding: 0 22px 24px 90px; }
+    .area-card.open .area-panel { display: block; }
+    .score-label { display: block; margin-bottom: 9px; color: var(--navy); font-size: .78rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+    .score-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; }
+    .score-button {
+      min-height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      color: var(--navy);
+      font-weight: 800;
+      transition: background .15s ease, border-color .15s ease, color .15s ease;
+    }
+    .score-button:hover { border-color: var(--teal-dark); }
+    .score-button[aria-pressed="true"] { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .evidence-guide { margin: 24px 0; border-top: 1px solid var(--line); }
+    .evidence-row {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .evidence-score {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--navy);
+      color: var(--white);
+      font-family: Montserrat, sans-serif;
+      font-weight: 800;
+    }
+    .evidence-row p { margin: 3px 0 0; color: #45536A; font-size: .9rem; }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .detail-block { padding: 20px; border-radius: 14px; background: var(--paper); }
+    .detail-block h4 { margin-bottom: 12px; color: var(--navy); font-size: .83rem; letter-spacing: .05em; text-transform: uppercase; }
+    .detail-block ul { margin: 0; padding-left: 19px; }
+    .detail-block li { margin-bottom: 7px; color: #4C5A70; font-size: .86rem; }
+    .detail-block.alert { background: var(--red-soft); }
+    .detail-block.alert li::marker { color: var(--red); }
+    .score-one-action {
+      margin-top: 18px;
+      padding: 17px 19px;
+      border-left: 4px solid var(--teal-dark);
+      background: var(--teal-soft);
+      color: var(--navy);
+      font-size: .9rem;
+    }
+    .score-one-action strong { font-family: Montserrat, sans-serif; }
+    .notes-label { display: block; margin: 21px 0 7px; color: var(--navy); font-size: .82rem; font-weight: 800; }
+    .notes-field {
+      width: 100%;
+      min-height: 92px;
+      resize: vertical;
+      padding: 13px 15px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .dark-section { background: var(--navy); color: var(--white); }
+    .dark-section .section-title { color: var(--white); }
+    .dark-section .section-intro { color: #B7C3D6; }
+    .red-flag-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .red-flag {
+      position: relative;
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 14px;
+      padding: 19px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 15px;
+      background: rgba(255,255,255,.045);
+      cursor: pointer;
+    }
+    .red-flag:hover { border-color: rgba(0,208,180,.55); }
+    .red-flag input { width: 19px; height: 19px; margin: 3px 0 0; accent-color: var(--teal); }
+    .red-flag strong { display: block; margin-bottom: 5px; color: var(--white); font-size: .9rem; }
+    .red-flag span { display: block; color: #AEBBD0; font-size: .82rem; }
+    .flag-result {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border-radius: 14px;
+      background: var(--teal);
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .root-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .root-card { padding: 23px; border: 1px solid var(--line); border-radius: 16px; background: var(--white); }
+    .root-card .root-letter { color: var(--teal-dark); font: 800 .72rem Montserrat, sans-serif; letter-spacing: .12em; }
+    .root-card h3 { margin: 30px 0 9px; color: var(--navy); font-size: 1.03rem; }
+    .root-card p { margin-bottom: 12px; color: var(--muted); font-size: .84rem; }
+    .root-card small { display: block; padding-top: 12px; border-top: 1px solid var(--line); color: var(--navy); font-weight: 700; line-height: 1.5; }
+
+    .next-step-panel {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+    .next-step-copy { padding: 42px; background: var(--navy); color: var(--white); }
+    .next-step-copy .section-kicker { color: var(--teal); }
+    .next-step-copy h2 { font-size: clamp(1.7rem, 3vw, 2.6rem); line-height: 1.12; }
+    .next-step-copy p { color: #B7C3D6; }
+    .next-step-recommendation { margin-top: 30px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.14); }
+    .next-step-recommendation strong { display: block; color: var(--teal); }
+    .next-step-list { padding: 42px; }
+    .next-step-list h3 { color: var(--navy); font-size: 1.08rem; }
+    .output-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; padding: 0; list-style: none; }
+    .output-list li { display: flex; gap: 9px; color: #445168; font-size: .88rem; }
+    .output-list li::before { content: "✓"; color: var(--teal-dark); font-weight: 900; }
+    .audit-note { margin: 22px 0 0; color: var(--muted); font-size: .84rem; }
+
+    .watchouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .watchout { padding: 24px; border: 1px solid var(--line); border-radius: 16px; background: var(--white); }
+    .watchout .watchout-label { color: var(--teal-dark); font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .watchout h3 { margin: 13px 0 8px; color: var(--navy); font-size: 1.02rem; }
+    .watchout > p { color: var(--muted); font-size: .88rem; font-weight: 600; }
+    .watchout ul { margin: 18px 0 0; padding-left: 18px; }
+    .watchout li { margin-bottom: 8px; color: #4C5A70; font-size: .83rem; }
+
+    .failure-list { border-top: 1px solid var(--line); }
+    .failure-row {
+      display: grid;
+      grid-template-columns: minmax(180px, .8fr) minmax(0, 1.2fr);
+      gap: 28px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .failure-row strong { color: var(--navy); font-family: Montserrat, sans-serif; }
+    .failure-row p { margin: 0; color: var(--muted); }
+    .failure-row p::before { content: "→"; margin-right: 10px; color: var(--teal-dark); font-weight: 900; }
+
+    .cta { padding: 95px 0; background: var(--teal); color: var(--navy); }
+    .cta-inner {
+      width: min(950px, calc(100% - 36px));
+      margin: 0 auto;
+      text-align: center;
+    }
+    .cta h2 { margin-bottom: 18px; font-size: clamp(2rem, 4.5vw, 4rem); line-height: 1.05; letter-spacing: -.045em; }
+    .cta p { max-width: 680px; margin: 0 auto 28px; font-size: 1.05rem; }
+    .cta .button { display: inline-block; padding: 15px 22px; text-decoration: none; background: var(--navy); color: var(--white); }
+    footer { padding: 30px 18px; background: var(--navy); color: #97A6BD; text-align: center; font-size: .8rem; }
+    footer a { color: var(--teal); }
+
+    .print-only { display: none; }
+
+    @media (max-width: 980px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 42px; }
+      .hero-side { max-width: 620px; }
+      .use-grid, .next-step-panel { grid-template-columns: 1fr; }
+      .principle-grid, .root-grid { grid-template-columns: repeat(2, 1fr); }
+      .score-panel {
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+          "intro gauge"
+          "stats gauge"
+          "result gauge"
+          "completion action";
+        gap: 18px 30px;
+      }
+      .watchouts { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .topbar-inner { min-height: 62px; }
+      .brand-text { display: none; }
+      .top-actions .button-secondary { display: none; }
+      .hero-inner { padding: 64px 0 58px; }
+      .section { padding: 62px 0; }
+      .participant-list, .red-flag-grid, .output-list { grid-template-columns: 1fr; }
+      .principle-grid, .root-grid { grid-template-columns: 1fr; }
+      .principle { min-height: auto; }
+      .principle h3 { margin-top: 24px; }
+      .score-panel { display: block; }
+      .score-panel .score-gauge { margin: 22px auto; }
+      .score-panel .score-stats, .score-panel .score-result, .score-panel .completion, .score-panel .pdf-action { margin-top: 18px; }
+      .pdf-action { text-align: left; }
+      .scoring-key { grid-template-columns: 1fr; }
+      .area-header { grid-template-columns: 42px minmax(0, 1fr) 22px; gap: 11px; padding: 17px; }
+      .area-number { width: 40px; height: 40px; border-radius: 11px; }
+      .area-status { grid-column: 2; justify-self: start; }
+      .chevron { grid-column: 3; grid-row: 1; }
+      .area-panel { padding: 0 17px 20px; }
+      .score-buttons { grid-template-columns: repeat(2, 1fr); }
+      .detail-grid { grid-template-columns: 1fr; }
+      .failure-row { grid-template-columns: 1fr; gap: 7px; }
+      .next-step-copy, .next-step-list { padding: 30px 24px; }
+    }
+
+    @media print {
+      @page { size: A4; margin: 14mm; }
+      body { background: white; color: #172033; font-size: 10pt; }
+      .screen-only, .topbar, .cta { display: none !important; }
+      .print-only { display: block; }
+      .hero { background: #0F172A !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .hero-inner { display: block; padding: 26mm 0 20mm; }
+      .hero-side { margin-top: 24px; }
+      h1 { font-size: 40pt; }
+      .section { width: 100%; padding: 12mm 0; }
+      .use-grid, .assessment-layout, .next-step-panel { display: block; }
+      .intro-card, .area-card, .root-card, .watchout { box-shadow: none; break-inside: avoid; }
+      .principle-band, .dark-section { background: white; color: #172033; }
+      .principle-band .section-title, .dark-section .section-title { color: #0F172A; }
+      .principle-band .section-intro, .dark-section .section-intro { color: #637087; }
+      .principle-grid { grid-template-columns: repeat(4, 1fr); border-color: #DCE5E3; background: #DCE5E3; }
+      .principle { min-height: 0; padding: 16px; background: #F7FAF9; color: #0F172A; }
+      .principle h3 { margin-top: 22px; }
+      .principle p { color: #637087; }
+      .score-panel { position: relative; top: auto; margin-bottom: 18px; box-shadow: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .area-panel { display: block !important; }
+      .area-card { break-inside: auto; }
+      .area-header { break-inside: avoid; }
+      .detail-grid, .evidence-guide, .score-buttons { break-inside: avoid; }
+      .notes-field { min-height: 58px; }
+      .red-flag-grid { grid-template-columns: 1fr 1fr; }
+      .red-flag { color: #172033; border-color: #DCE5E3; background: white; }
+      .red-flag strong { color: #0F172A; }
+      .red-flag span { color: #637087; }
+      .flag-result { border: 1px solid #00D0B4; }
+      .root-grid { grid-template-columns: repeat(2, 1fr); }
+      .watchouts { grid-template-columns: 1fr; }
+      .next-step-copy { background: #0F172A !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      footer { background: white; color: #637087; border-top: 1px solid #DCE5E3; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar screen-only">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="GTM Diagnostics home">
+        <span class="brand-mark">G</span><span class="brand-text">GTM Diagnostics</span>
+      </a>
+      <div class="top-actions">
+        <button class="button button-secondary" id="resetButton" type="button">Reset answers</button>
+        <button class="button button-primary" id="printButton" type="button">Print / save PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="eyebrow">HubSpot audit resource</div>
+          <h1>The No-Ops HubSpot Gap Checklist</h1>
+          <p class="hero-lead">A 20–30 minute, evidence-led self-assessment for teams running HubSpot without a dedicated RevOps, SalesOps, or MarketingOps owner.</p>
+        </div>
+        <aside class="hero-side">
+          <strong>Is HubSpot helping the business operate—or quietly exposing an ownership gap?</strong>
+          <p>Score what you can prove today using live records, dashboards, workflows, fields, reports, process documents, and team behaviour.</p>
+          <div class="hero-meta">
+            <span class="meta-chip">11 diagnostic areas</span>
+            <span class="meta-chip">Evidence over intention</span>
+            <span class="meta-chip">Auto-saved</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="use-title">
+      <div class="section-kicker">How to use it</div>
+      <h2 class="section-title" id="use-title">Bring the people who rely on HubSpot most.</h2>
+      <p class="section-intro">Complete the checklist together. You do not need a portal export; you need inspectable evidence and honest answers.</p>
+      <div class="use-grid">
+        <div class="intro-card">
+          <h3>Who should be in the room</h3>
+          <p>Use a cross-functional view so a strong score in one team does not hide a broken handoff elsewhere.</p>
+          <div class="participant-list">
+            <div class="participant">An executive who needs trusted reporting</div>
+            <div class="participant">A sales or business development owner</div>
+            <div class="participant">A marketing or growth owner</div>
+            <div class="participant">An operations or delivery owner, if relevant</div>
+          </div>
+        </div>
+        <div class="intro-card">
+          <h3>Why this matters</h3>
+          <p>HubSpot rarely breaks all at once. It drifts—and people compensate until the informal operating layer becomes the constraint.</p>
+          <div class="drift-list">
+            <div class="drift-item"><span class="drift-index">01</span><p>Leaders stop trusting reports.</p></div>
+            <div class="drift-item"><span class="drift-index">02</span><p>Managers cannot inspect pipeline without asking for the story.</p></div>
+            <div class="drift-item"><span class="drift-index">03</span><p>Leads, workflows, and handoffs depend on individual habits.</p></div>
+            <div class="drift-item"><span class="drift-index">04</span><p>AI sounds attractive, but the data and process foundation cannot support it.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="principle-band" aria-labelledby="principle-title">
+      <div class="section">
+        <div class="section-kicker">The governing principle</div>
+        <h2 class="section-title" id="principle-title">HubSpot is operational only when every important revenue process has four things.</h2>
+        <p class="section-intro">If one is missing, HubSpot may still be usable—but it is not yet governed.</p>
+        <div class="principle-grid">
+          <article class="principle"><span class="principle-num">01 / ACCOUNTABILITY</span><h3>Owner</h3><p>Someone is accountable for the standard.</p></article>
+          <article class="principle"><span class="principle-num">02 / CLARITY</span><h3>Standard</h3><p>The rule is clear enough for others to follow.</p></article>
+          <article class="principle"><span class="principle-num">03 / CONTINUITY</span><h3>Cadence</h3><p>The rule is reviewed, maintained, and improved.</p></article>
+          <article class="principle"><span class="principle-num">04 / INSPECTION</span><h3>Evidence</h3><p>Another person can verify it without asking for the story.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section assessment" id="assessment" aria-labelledby="assessment-title">
+      <div class="section-kicker">The assessment</div>
+      <h2 class="section-title" id="assessment-title">Score what is true today—not what is intended.</h2>
+      <p class="section-intro">Give a 3 only when you can point to an owner, standard, cadence, and inspectable evidence. Your answers and notes are saved in this browser.</p>
+      <div class="assessment-layout">
+        <div>
+          <div class="scoring-key" aria-label="Scoring guide">
+            <div class="key-item"><strong>1 — Ad hoc</strong><span>Depends on memory, habits, spreadsheets, or manual checks.</span></div>
+            <div class="key-item"><strong>2 — Inconsistent</strong><span>Something exists, but ownership, adoption, evidence, or cadence is weak.</span></div>
+            <div class="key-item"><strong>3 — Governed</strong><span>Owner, standard, cadence, and evidence are all visible.</span></div>
+          </div>
+          <div id="areaList"></div>
+        </div>
+        <aside class="score-panel" aria-live="polite">
+          <div>
+            <h3>Your HubSpot operating score</h3>
+            <p>Your result updates automatically as you answer each area.</p>
+          </div>
+          <div class="score-gauge" id="scoreGauge">
+            <div class="score-gauge-value"><strong id="totalScore">0</strong><span id="maxScore">of 33</span></div>
+          </div>
+          <div class="score-stats">
+            <div class="score-stat"><strong id="countOne">0</strong><span>Score 1</span></div>
+            <div class="score-stat"><strong id="countTwo">0</strong><span>Score 2</span></div>
+            <div class="score-stat"><strong id="countThree">0</strong><span>Score 3</span></div>
+          </div>
+          <div class="score-result"><strong id="resultTitle">Ready when you are</strong><p id="resultCopy">Score each area to reveal the operating pattern behind your HubSpot setup.</p></div>
+          <div class="completion">
+            <div class="completion-row"><span>Assessment progress</span><span id="completionText">0 / 11</span></div>
+            <div class="completion-bar"><div class="completion-fill" id="completionFill"></div></div>
+          </div>
+          <div class="pdf-action screen-only">
+            <button class="button button-primary" id="printPanelButton" type="button">Print / save PDF</button>
+            <small>In the browser print window, choose “Save as PDF” as the destination.</small>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="dark-section" aria-labelledby="flags-title">
+      <div class="section">
+        <div class="section-kicker">Critical red flags</div>
+        <h2 class="section-title" id="flags-title">Some signals matter more than the total score.</h2>
+        <p class="section-intro">Check every statement that is true. Any one of these can justify deeper inspection.</p>
+        <div class="red-flag-grid" id="redFlagGrid"></div>
+        <div class="flag-result" id="flagResult" aria-live="polite">No critical red flags selected.</div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="root-title">
+      <div class="section-kicker">Root cause map</div>
+      <h2 class="section-title" id="root-title">A low score is a symptom. Classify the cause before choosing the fix.</h2>
+      <p class="section-intro">Use these four lenses on your two or three lowest-scoring areas.</p>
+      <div class="root-grid">
+        <article class="root-card"><span class="root-letter">T / TECHNOLOGY</span><h3>Can the stack support the work?</h3><p>HubSpot or a connected tool fails to support the required workflow.</p><small>Typical fix: configure, clean, integrate, automate, simplify, or report differently.</small></article>
+        <article class="root-card"><span class="root-letter">P / PROCESS</span><h3>Is there an agreed way of working?</h3><p>The rules, triggers, owners, SLAs, handoffs, or lifecycle stages are unclear.</p><small>Typical fix: define the operating standard and review cadence.</small></article>
+        <article class="root-card"><span class="root-letter">S / SKILLS + ADOPTION</span><h3>Can people execute the process?</h3><p>The system exists, but users struggle, avoid it, or work around it.</p><small>Typical fix: train, document, coach, simplify the UX, and reinforce through managers.</small></article>
+        <article class="root-card"><span class="root-letter">G / GOVERNANCE</span><h3>Who keeps the standard working?</h3><p>No one is accountable for quality, change control, or recurring review.</p><small>Typical fix: assign ownership, change rules, quality checks, and cadence.</small></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="watchouts-title">
+      <div class="section-kicker">Segment-specific watchouts</div>
+      <h2 class="section-title" id="watchouts-title">The operating gap looks different as the company grows.</h2>
+      <div class="watchouts">
+        <article class="watchout"><span class="watchout-label">B2B SaaS / small sales team</span><h3>Founder-memory dependence</h3><p>HubSpot stores information, but the founder still runs the operating layer.</p><ul><li>No documented lifecycle or pipeline definitions</li><li>Lead follow-up checked manually</li><li>No owner for data, workflows, or dashboards</li><li>Reports built for current activity, not future scale</li></ul></article>
+        <article class="watchout"><span class="watchout-label">B2B SaaS / 5–20 sellers</span><h3>Manager-layer opacity</h3><p>The system is live, but managers still cannot inspect execution reliably.</p><ul><li>Side spreadsheets for pipeline review</li><li>Stages without exit criteria</li><li>Weak follow-up SLA visibility</li><li>Forecasting depends on rep narrative</li></ul></article>
+        <article class="watchout"><span class="watchout-label">Professional services</span><h3>Relationship-led operations</h3><p>Business development works through people, but the system does not preserve context.</p><ul><li>Proposal stages managed outside HubSpot</li><li>Weak sales-to-delivery handoff</li><li>Delivery context lives in conversations</li><li>No view of future revenue or resource demand</li></ul></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="failures-title">
+      <div class="section-kicker">Common failure modes</div>
+      <h2 class="section-title" id="failures-title">Avoid the fix that only makes the symptom look tidier.</h2>
+      <p class="section-intro">The fastest route to more drift is improving the visible surface while leaving the operating cause untouched.</p>
+      <div class="failure-list">
+        <div class="failure-row"><strong>Treating symptoms as tasks</strong><p>Ask which data, process, skills, or governance issue makes the dashboard wrong before rebuilding it.</p></div>
+        <div class="failure-row"><strong>Auditing against generic best practice</strong><p>Audit against the actual strategy, sales motion, customer journey, and decisions—not a universal setup.</p></div>
+        <div class="failure-row"><strong>Giving maturity for intention</strong><p>Score only what is documented, used, reviewed, and inspectable.</p></div>
+        <div class="failure-row"><strong>Fixing reporting before data</strong><p>Govern fields, lifecycle definitions, ownership, and source rules before rebuilding dashboards.</p></div>
+        <div class="failure-row"><strong>Over-automating unclear process</strong><p>Define the process before adding workflows around it.</p></div>
+        <div class="failure-row"><strong>Ignoring the manager layer</strong><p>Build manager views, cadence, and evidence standards—not only leadership dashboards.</p></div>
+        <div class="failure-row"><strong>Treating AI as the shortcut</strong><p>Improve input quality, process clarity, and human review before adding AI support.</p></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="next-title">
+      <div class="next-step-panel">
+        <div class="next-step-copy">
+          <div class="section-kicker">What to do next</div>
+          <h2 id="next-title">Fix the operating gap—not just the visible symptom.</h2>
+          <p>Rebuilding a dashboard will not make weak source data trustworthy. More automation will not repair an undefined process.</p>
+          <div class="next-step-recommendation"><strong id="nextStepTitle">Complete the checklist first.</strong><span id="nextStepCopy">Your recommended next step will update as you score the assessment.</span></div>
+        </div>
+        <div class="next-step-list">
+          <h3>A proper HubSpot Audit should produce:</h3>
+          <ul class="output-list">
+            <li>Current-state assessment</li>
+            <li>Revenue Maturity Scorecard</li>
+            <li>Evidence-backed findings</li>
+            <li>Stakeholder impact summary</li>
+            <li>Root-cause assessment</li>
+            <li>Prioritised opportunity backlog</li>
+            <li>3–6 month improvement roadmap</li>
+            <li>Clear delivery recommendations</li>
+          </ul>
+          <p class="audit-note">This checklist is an intentionally light self-assessment. A full audit adapts the target maturity to your strategy, team size, sales motion, HubSpot footprint, customer journey, and operating priorities.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="cta-inner">
+        <h2>Make HubSpot trusted, inspectable, and useful.</h2>
+        <p>If this checklist exposes a real operating gap, a structured audit can identify the root causes, prioritise the highest-impact improvements, and show the right path forward.</p>
+        <a class="button" href="https://gtmdiagnostics.com" target="_blank" rel="noopener">Explore GTM Diagnostics</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>GTM Diagnostics</strong> · HubSpot Audit Resource · <a href="https://gtmdiagnostics.com">gtmdiagnostics.com</a>
+  </footer>
+
+  <script>
+    const areas = [
+      {
+        title: "Commercial Strategy Alignment",
+        question: "Does HubSpot reflect the growth priorities leadership is actually pursuing?",
+        scores: [
+          "HubSpot was configured around old assumptions, default settings, or isolated requests. Leadership goals are not reflected in lifecycle stages, pipelines, dashboards, or reporting.",
+          "Some strategic priorities appear in HubSpot, but the system does not consistently support current segments, motions, goals, or operating decisions.",
+          "HubSpot is visibly aligned to the current commercial strategy: target segments, revenue motion, customer journey, KPIs, dashboards, and priority processes."
+        ],
+        inspect: ["Current growth goals", "Target segments and ICP", "Sales and marketing motion", "Lifecycle stages", "Pipeline structure", "Executive dashboards", "KPIs used in leadership meetings"],
+        red: ["The business has changed, but HubSpot has not.", "HubSpot reports what is easy to measure, not what leadership needs to decide.", "Nobody can explain which strategic priority a dashboard or workflow supports."],
+        action: "Do not start with configuration cleanup. Start by defining what HubSpot needs to support."
+      },
+      {
+        title: "CRM Architecture and Governance",
+        question: "Are objects, properties, owners, teams, permissions, and change rules governed?",
+        scores: [
+          "Properties, pipelines, lists, permissions, and views have grown organically. Changes are made when someone asks, with little documentation or ownership.",
+          "Basic structure exists, but naming, ownership, field use, permissions, or change control are inconsistent.",
+          "HubSpot structure is governed. There are clear rules for objects, properties, pipelines, owners, permissions, naming, and changes."
+        ],
+        inspect: ["Property list and usage", "Lifecycle and pipeline definitions", "Teams and permissions", "Owner assignment rules", "Required fields", "Naming conventions", "Documentation or change log"],
+        red: ["Many fields exist because one person needed them once.", "No one knows which fields are still important.", "Users can create or edit important properties without review.", "Teams disagree about what a lifecycle or deal stage means."],
+        action: "Reporting, automation, and AI will inherit weak architecture. Fix governance first."
+      },
+      {
+        title: "Data Quality and Source of Truth",
+        question: "Can the business trust key records, lifecycle stages, sources, and ownership fields?",
+        scores: [
+          "Records are incomplete, duplicated, stale, mis-owned, or inconsistent. People regularly question whether HubSpot data is right.",
+          "Key data exists, but quality varies by team, object, lifecycle stage, source, or user behaviour.",
+          "Critical data is complete enough, fresh enough, and governed enough to support decisions, workflows, reporting, and basic AI use cases."
+        ],
+        inspect: ["Duplicate contacts and companies", "Missing owners", "Missing lifecycle stages", "Missing or unreliable lead source", "Stale records", "Incomplete deal fields", "Hard bounces or invalid contacts", "Required field completion by team"],
+        red: ["People export data to clean it manually.", "Teams do not agree on the source of truth.", "Required fields exist but are not meaningfully completed.", "Reports are distrusted because the underlying fields are weak."],
+        action: "Do not rebuild dashboards first. Reports cannot become trusted while their source data remains weak."
+      },
+      {
+        title: "Lead Management and Routing",
+        question: "Are good-fit leads captured, qualified, routed, followed up, and recycled without leakage?",
+        scores: [
+          "Lead capture and follow-up depend on manual review, individual habits, or informal Slack messages. SLA and routing rules are unclear.",
+          "Routing or follow-up rules exist, but coverage, ownership, scoring, lifecycle transitions, or SLA inspection are inconsistent.",
+          "Leads are captured, qualified, routed, followed up, and recycled through defined HubSpot rules with visible ownership and SLA reporting."
+        ],
+        inspect: ["Forms and lead capture paths", "MQL, SQL, or sales-accepted definitions", "Lead score or fit criteria", "Routing workflows", "Owner assignment", "Follow-up tasks", "SLA dashboards", "Recycling or nurture logic"],
+        red: ["Demo requests and low-intent downloads receive similar treatment.", "Leads sit unowned or unworked.", "Sales and Marketing disagree about lead quality.", "There is no way to see which leads missed follow-up SLA."],
+        action: "The first fix is not more demand generation. It is stopping existing demand from leaking."
+      },
+      {
+        title: "Sales Operations and Pipeline",
+        question: "Can managers inspect pipeline quality without asking reps for the story?",
+        scores: [
+          "Deal stages, next steps, close dates, qualification, and forecast confidence depend heavily on rep narrative or side spreadsheets.",
+          "Sales process and fields exist, but stage rules, qualification evidence, deal hygiene, activity logging, or manager inspection are inconsistent.",
+          "Pipeline stages, qualification, next steps, close dates, forecast categories, and manager dashboards are governed and inspectable in HubSpot."
+        ],
+        inspect: ["Deal stages and exit criteria", "Next-step fields", "Close-date hygiene", "Stale deals", "Stage ageing", "Qualification fields", "Forecast categories", "Activity logging", "Sales manager dashboards"],
+        red: ["Managers need a meeting to learn what HubSpot should already show.", "Deals advance based on seller activity rather than buyer evidence.", "Close dates move repeatedly without explanation.", "Forecast calls debate opinion instead of inspecting evidence."],
+        action: "Sales leadership does not only have a reporting problem. It has an inspectability problem."
+      },
+      {
+        title: "Marketing Operations and Attribution",
+        question: "Can Marketing see which sources and campaigns create qualified pipeline?",
+        scores: [
+          "Marketing can report activity or engagement, but cannot reliably connect source, campaign, lifecycle progression, and qualified pipeline.",
+          "Source and campaign data exists, but definitions, field quality, campaign structure, list governance, or Sales handoff reporting are inconsistent.",
+          "Marketing has governed source taxonomy, campaign structure, lifecycle reporting, segmentation, and campaign-to-pipeline visibility."
+        ],
+        inspect: ["Original and latest source fields", "Campaign structure", "Forms and conversion paths", "Lists and segmentation rules", "Lifecycle conversion reports", "Campaign-to-pipeline dashboards", "UTM or source governance", "Sales handoff reporting"],
+        red: ["Marketing reports leads, Sales reports opportunities, and nobody trusts the bridge.", "Source values are messy, duplicated, or overwritten.", "Campaigns are created without naming or ownership rules.", "Lists exist but no one knows which ones drive action."],
+        action: "Marketing visibility is probably activity-level, not revenue-level."
+      },
+      {
+        title: "Service Operations and Handoffs",
+        question: "Does post-sale context transfer cleanly from Sales into delivery or Customer Success?",
+        scores: [
+          "Closed-won handoff depends on meetings, memory, notes, or individual effort. Delivery or CS often has to reconstruct context.",
+          "Handoff steps exist, but required context, ownership, timing, ticketing, onboarding visibility, or customer health reporting are inconsistent.",
+          "Sales-to-delivery or Sales-to-CS handoff is governed in HubSpot with required context, owner, next step, customer stage, and visibility."
+        ],
+        inspect: ["Closed-won handoff process", "Required handoff fields", "Onboarding or delivery records", "Tickets or project tracking", "Customer stage fields", "Renewal or expansion signals", "Customer health indicators", "Handoff completion reports"],
+        red: ["Delivery asks customers for information Sales already collected.", "Consultants or CSMs rely on Slack for context.", "Closed-won does not trigger the next operational step.", "Onboarding, renewal, or expansion risk is not visible in HubSpot."],
+        action: "The cost shows up as delivery rework, customer friction, and slower time to value."
+      },
+      {
+        title: "Reporting and Revenue Intelligence",
+        question: "Do dashboards answer leadership and manager decisions, not just activity questions?",
+        scores: [
+          "Reports exist, but leadership does not trust them or they do not answer the decisions the business needs to make. Manual reporting is common.",
+          "Useful reports exist, but KPI definitions, dashboard ownership, data quality, usage, or decision coverage are inconsistent.",
+          "Executive and manager dashboards are trusted, used on a cadence, and tied to clear business decisions."
+        ],
+        inspect: ["Executive, sales, marketing, and service dashboards", "Data quality dashboards", "KPI definitions", "Dashboard owners", "Dashboard usage", "Manual reporting work", "Board or management reporting packs"],
+        red: ["The most important leadership report is built outside HubSpot.", "Teams use different definitions for the same KPI.", "Dashboards are reviewed only when something is wrong.", "Reports show activity but not conversion, quality, risk, or next decisions."],
+        action: "The business does not yet have a visibility layer. It has reports."
+      },
+      {
+        title: "Automation, Workflow, and Integrations",
+        question: "Are workflows and connected tools documented, owned, monitored, and tied to stable process rules?",
+        scores: [
+          "Workflows and integrations exist, but ownership, documentation, monitoring, error handling, or business logic are unclear.",
+          "Important automation exists, but some workflows are undocumented, overlapping, stale, error-prone, or built around exceptions.",
+          "Workflows and integrations have owners, documentation, naming rules, error monitoring, review cadence, and clear process logic."
+        ],
+        inspect: ["Workflow inventory", "Active and inactive workflows", "Workflow owners", "Enrollment and suppression rules", "Error logs", "Last-edited date", "Connected apps", "Integration sync errors", "Field authority rules", "Documentation"],
+        red: ["Nobody knows what an active workflow does.", "Multiple workflows touch the same lifecycle, owner, or source fields.", "Errors are noticed only when users complain.", "A workflow patches a process nobody defined."],
+        action: "Automation may be creating hidden risk. Clean the logic before adding more workflows."
+      },
+      {
+        title: "Adoption and Enablement",
+        question: "Do users understand how HubSpot supports the process, or do they work around it?",
+        scores: [
+          "Users work around HubSpot, avoid updating it, or use it only because they are forced to. Training and documentation are weak or missing.",
+          "Users know the basics, but adoption varies by person, team, manager, or workflow. Manager inspection and process reinforcement are inconsistent.",
+          "HubSpot usage is reinforced by process, documentation, training, manager review, and a user experience that helps people do the work."
+        ],
+        inspect: ["Active users", "Login and activity patterns", "Activity logging", "Required field completion", "Onboarding materials", "SOPs or process docs", "Manager inspection habits", "User-reported friction", "Workarounds"],
+        red: ["The team describes HubSpot as admin, not operational support.", "Managers do not inspect usage in the normal cadence.", "Users update HubSpot only before meetings.", "New hires learn the system from another user, not a standard."],
+        action: "Do not solve adoption with training alone. Check whether the system actually helps users do their jobs."
+      },
+      {
+        title: "AI Readiness and Enablement",
+        question: "Are data, process, and governance strong enough for useful AI workflows?",
+        scores: [
+          "AI interest exists, but data quality, process clarity, permissions, or human review rules are too weak for reliable AI-supported workflows.",
+          "Some AI use cases are possible, but inputs, ownership, approval rules, promptable fields, or adoption paths are inconsistent.",
+          "AI use cases are selected against real workflows, with sufficient data quality, clear process, human review, and measurable value."
+        ],
+        inspect: ["Recurring manual work", "Data quality in required fields", "Workflow stability", "Sensitive data handling", "Human review points", "HubSpot AI usage", "Prompt or rubric library", "Approval rules", "Time-saved or quality metrics"],
+        red: ["AI is discussed as a fix for unclear process.", "The data AI would use is incomplete or untrusted.", "No one owns approval, review, or acceptable-use rules.", "AI outputs affect customers or records without human validation."],
+        action: "Start with data, process, and governance. AI should improve a workflow, not compensate for the absence of one."
+      }
+    ];
+
+    const redFlags = [
+      ["Leadership does not trust the main revenue dashboard.", "Decision confidence is already compromised."],
+      ["Lifecycle stages mean different things to Sales and Marketing.", "Funnel reporting and handoffs are not reliable."],
+      ["Leads can enter HubSpot without a clear owner or follow-up SLA.", "Good-fit demand can leak before anyone notices."],
+      ["Sales managers use side spreadsheets for pipeline review.", "HubSpot is not giving managers enough inspectable evidence."],
+      ["Source or campaign fields are overwritten, missing, or ignored.", "Marketing ROI and pipeline contribution are hard to defend."],
+      ["Active workflows have no clear owner.", "Automation can create hidden risk and decay."],
+      ["Users work around HubSpot because it slows them down.", "Adoption is a system-design problem, not just a training problem."],
+      ["The company wants AI workflows but cannot trust the data or process.", "AI will accelerate confusion instead of improving execution."]
+    ];
+
+    const storeKey = "gtm-no-ops-hubspot-gap-v1";
+    let state = { scores: {}, notes: {}, flags: {} };
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[char]));
+    }
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(storeKey));
+        if (saved && typeof saved === "object") state = { scores: saved.scores || {}, notes: saved.notes || {}, flags: saved.flags || {} };
+      } catch (_) { /* Keep a clean state if browser storage is unavailable or invalid. */ }
+    }
+
+    function saveState() {
+      try { localStorage.setItem(storeKey, JSON.stringify(state)); } catch (_) { /* The assessment still works without persistence. */ }
+    }
+
+    function renderAreas() {
+      const list = document.getElementById("areaList");
+      list.innerHTML = areas.map((area, index) => {
+        const savedScore = state.scores[index] ?? "";
+        const status = savedScore === "na" ? "N/A" : savedScore ? `Score ${savedScore}` : "Not scored";
+        const evidence = area.scores.map((text, i) => `<div class="evidence-row"><span class="evidence-score">${i + 1}</span><p>${escapeHtml(text)}</p></div>`).join("");
+        const inspect = area.inspect.map(item => `<li>${escapeHtml(item)}</li>`).join("");
+        const red = area.red.map(item => `<li>${escapeHtml(item)}</li>`).join("");
+        return `
+          <article class="area-card${index === 0 ? " open" : ""}" data-area="${index}" data-score="${savedScore}">
+            <button class="area-header" type="button" aria-expanded="${index === 0}" aria-controls="area-panel-${index}">
+              <span class="area-number">${String(index + 1).padStart(2, "0")}</span>
+              <span class="area-heading"><h3>${escapeHtml(area.title)}</h3><p>${escapeHtml(area.question)}</p></span>
+              <span class="area-status">${status}</span><span class="chevron" aria-hidden="true">⌄</span>
+            </button>
+            <div class="area-panel" id="area-panel-${index}">
+              <span class="score-label">Choose the statement that best matches today</span>
+              <div class="score-buttons" role="group" aria-label="Score ${escapeHtml(area.title)}">
+                ${[1,2,3].map(score => `<button class="score-button" type="button" data-score-choice="${score}" aria-pressed="${String(savedScore) === String(score)}">${score} — ${score === 1 ? "Ad hoc" : score === 2 ? "Inconsistent" : "Governed"}</button>`).join("")}
+                <button class="score-button" type="button" data-score-choice="na" aria-pressed="${savedScore === "na"}">N/A</button>
+              </div>
+              <div class="evidence-guide">${evidence}</div>
+              <div class="detail-grid">
+                <div class="detail-block"><h4>What to inspect</h4><ul>${inspect}</ul></div>
+                <div class="detail-block alert"><h4>Red flags</h4><ul>${red}</ul></div>
+              </div>
+              <div class="score-one-action"><strong>If this scores 1:</strong> ${escapeHtml(area.action)}</div>
+              <label class="notes-label" for="notes-${index}">Notes / evidence</label>
+              <textarea class="notes-field" id="notes-${index}" data-notes placeholder="What can you point to today?">${escapeHtml(state.notes[index] || "")}</textarea>
+            </div>
+          </article>`;
+      }).join("");
+
+      list.querySelectorAll(".area-header").forEach(header => {
+        header.addEventListener("click", () => {
+          const card = header.closest(".area-card");
+          const isOpen = card.classList.toggle("open");
+          header.setAttribute("aria-expanded", String(isOpen));
+        });
+      });
+
+      list.querySelectorAll("[data-score-choice]").forEach(button => {
+        button.addEventListener("click", () => {
+          const card = button.closest(".area-card");
+          const index = Number(card.dataset.area);
+          state.scores[index] = button.dataset.scoreChoice;
+          card.dataset.score = button.dataset.scoreChoice;
+          card.querySelectorAll("[data-score-choice]").forEach(peer => peer.setAttribute("aria-pressed", String(peer === button)));
+          card.querySelector(".area-status").textContent = button.dataset.scoreChoice === "na" ? "N/A" : `Score ${button.dataset.scoreChoice}`;
+          saveState();
+          updateSummary();
+        });
+      });
+
+      list.querySelectorAll("[data-notes]").forEach(field => {
+        field.addEventListener("input", () => {
+          const index = Number(field.closest(".area-card").dataset.area);
+          state.notes[index] = field.value;
+          saveState();
+        });
+      });
+    }
+
+    function renderRedFlags() {
+      const grid = document.getElementById("redFlagGrid");
+      grid.innerHTML = redFlags.map((flag, index) => `
+        <label class="red-flag">
+          <input type="checkbox" data-flag="${index}" ${state.flags[index] ? "checked" : ""}>
+          <span><strong>${escapeHtml(flag[0])}</strong><span>${escapeHtml(flag[1])}</span></span>
+        </label>`).join("");
+      grid.querySelectorAll("[data-flag]").forEach(input => input.addEventListener("change", () => {
+        state.flags[input.dataset.flag] = input.checked;
+        saveState();
+        updateFlags();
+      }));
+      updateFlags();
+    }
+
+    function updateFlags() {
+      const count = Object.values(state.flags).filter(Boolean).length;
+      const result = document.getElementById("flagResult");
+      result.textContent = count === 0
+        ? "No critical red flags selected."
+        : `${count} critical red flag${count === 1 ? "" : "s"} selected — the total score matters less; deeper inspection is warranted.`;
+    }
+
+    function updateSummary() {
+      const numeric = Object.values(state.scores).filter(value => ["1", "2", "3"].includes(String(value))).map(Number);
+      const completed = Object.values(state.scores).filter(value => ["1", "2", "3", "na"].includes(String(value))).length;
+      const total = numeric.reduce((sum, value) => sum + value, 0);
+      const notApplicable = Object.values(state.scores).filter(value => String(value) === "na").length;
+      const max = 33 - (notApplicable * 3);
+      const count = score => numeric.filter(value => value === score).length;
+      const percent = max ? Math.round((total / max) * 100) : 0;
+      document.getElementById("totalScore").textContent = total;
+      document.getElementById("maxScore").textContent = `of ${max}`;
+      document.getElementById("countOne").textContent = count(1);
+      document.getElementById("countTwo").textContent = count(2);
+      document.getElementById("countThree").textContent = count(3);
+      document.getElementById("completionText").textContent = `${completed} / 11`;
+      document.getElementById("completionFill").style.width = `${Math.round(completed / 11 * 100)}%`;
+      document.getElementById("scoreGauge").style.setProperty("--progress", `${percent * 3.6}deg`);
+
+      const resultTitle = document.getElementById("resultTitle");
+      const resultCopy = document.getElementById("resultCopy");
+      const nextTitle = document.getElementById("nextStepTitle");
+      const nextCopy = document.getElementById("nextStepCopy");
+      const oneCount = count(1);
+      const twoCount = count(2);
+
+      if (completed === 0) {
+        resultTitle.textContent = "Ready when you are";
+        resultCopy.textContent = "Score each area to reveal the operating pattern behind your HubSpot setup.";
+        nextTitle.textContent = "Complete the checklist first.";
+        nextCopy.textContent = "Your recommended next step will update as you score the assessment.";
+      } else if (completed < 11) {
+        resultTitle.textContent = `${completed} of 11 areas complete`;
+        resultCopy.textContent = "Keep going. The cross-functional pattern matters more than any one area.";
+        nextTitle.textContent = oneCount >= 2 ? "An operating gap is already visible." : "Complete the remaining areas.";
+        nextCopy.textContent = oneCount >= 2 ? "Two or more areas already score 1. Avoid adding tools or automation until you have inspected the root causes." : "Finish the assessment before choosing an intervention.";
+      } else if (oneCount >= 2 || percent <= 52) {
+        resultTitle.textContent = "Mostly ad hoc";
+        resultCopy.textContent = "The revenue operating layer relies heavily on people remembering what to do.";
+        nextTitle.textContent = "Run a full HubSpot Audit.";
+        nextCopy.textContent = "Inspect the root causes before adding more tools, dashboards, workflows, or AI.";
+      } else if (percent <= 73) {
+        resultTitle.textContent = "The no-Ops drift zone";
+        resultCopy.textContent = "The system is partially defined, but ownership and evidence are inconsistent.";
+        nextTitle.textContent = "Prioritise the 2–3 lowest areas.";
+        nextCopy.textContent = "Confirm whether the cause is technology, process, skills, or governance before fixing symptoms.";
+      } else if (percent <= 89) {
+        resultTitle.textContent = "Operational—with gaps";
+        resultCopy.textContent = "HubSpot works in several areas, but gaps may still create reporting, handoff, or scalability risk.";
+        nextTitle.textContent = "Run a focused review.";
+        nextCopy.textContent = "Start with the lowest-scoring areas and any critical red flags, even if the total looks healthy.";
+      } else {
+        resultTitle.textContent = "Relatively mature";
+        resultCopy.textContent = "The operating layer is strong for a no-Ops environment. Maintain the standard deliberately.";
+        nextTitle.textContent = "Maintain governance quarterly.";
+        nextCopy.textContent = "Use a focused audit when strategy, team size, or HubSpot usage changes materially.";
+      }
+
+      const priorityMap = {
+        2: ["Data Quality", "Fix field governance and source-of-truth issues before rebuilding reports."],
+        3: ["Lead Management", "Map lead capture, owner assignment, follow-up SLA, and recycling end to end."],
+        4: ["Sales Operations", "Define stage rules, qualification evidence, and manager inspection surfaces."],
+        5: ["Marketing Operations", "Govern source taxonomy, campaigns, lifecycle reporting, and pipeline attribution."],
+        7: ["Reporting", "Inspect data quality, KPI definitions, and decision coverage before rebuilding dashboards."],
+        8: ["Automation", "Inventory workflows and integrations before adding new automation."]
+      };
+      const priorityIndex = Object.keys(priorityMap).map(Number).find(index => String(state.scores[index]) === "1");
+      if (completed === 11 && priorityIndex !== undefined) {
+        nextTitle.textContent = `${priorityMap[priorityIndex][0]} needs immediate attention.`;
+        nextCopy.textContent = priorityMap[priorityIndex][1];
+      } else if (completed === 11 && oneCount === 0 && twoCount >= 6) {
+        nextTitle.textContent = "Assign ownership and cadence first.";
+        nextCopy.textContent = "The system may not need a rebuild, but it does need governance."
+      }
+    }
+
+    function printAssessment() { window.print(); }
+
+    loadState();
+    renderAreas();
+    renderRedFlags();
+    updateSummary();
+
+    document.getElementById("printButton").addEventListener("click", printAssessment);
+    document.getElementById("printPanelButton").addEventListener("click", printAssessment);
+    document.getElementById("resetButton").addEventListener("click", () => {
+      if (!window.confirm("Clear all scores, notes, and red flags for this checklist?")) return;
+      state = { scores: {}, notes: {}, flags: {} };
+      saveState();
+      renderAreas();
+      renderRedFlags();
+      updateSummary();
+      document.getElementById("assessment").scrollIntoView({ behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>
