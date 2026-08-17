@@ -71,6 +71,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="A practical, evidence-led self-assessment for teams running HubSpot without a dedicated operations owner.">
   <title>The No-Ops HubSpot Gap Checklist | GTM Diagnostics</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/logo-square.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
@@ -143,15 +145,13 @@
       text-decoration: none;
     }
     .brand-mark {
-      width: 28px;
-      height: 28px;
-      display: grid;
-      place-items: center;
-      border: 2px solid var(--teal);
-      border-radius: 8px;
-      color: var(--teal);
-      transform: rotate(-8deg);
-      font-size: .72rem;
+      width: 36px;
+      height: 36px;
+      display: block;
+      flex: 0 0 36px;
+      border-radius: 9px;
+      object-fit: cover;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.14);
     }
     .top-actions { display: flex; gap: 10px; }
     .button {
@@ -189,12 +189,13 @@
     .hero::after {
       content: "";
       position: absolute;
-      width: 520px;
-      height: 520px;
-      right: -170px;
-      top: -220px;
-      border: 92px solid rgba(0,208,180,.1);
-      border-radius: 50%;
+      width: 590px;
+      height: 590px;
+      right: -125px;
+      top: -185px;
+      background: url("assets/favicon.png") center / contain no-repeat;
+      opacity: .11;
+      transform: rotate(-4deg);
     }
     .hero-inner {
       position: relative;
@@ -711,7 +712,7 @@
   <header class="topbar screen-only">
     <div class="topbar-inner">
       <a class="brand" href="#top" aria-label="GTM Diagnostics home">
-        <span class="brand-mark">G</span><span class="brand-text">GTM Diagnostics</span>
+        <img class="brand-mark" src="assets/logo-square.png" alt="" width="36" height="36"><span class="brand-text">GTM Diagnostics</span>
       </a>
       <div class="top-actions">
         <button class="button button-secondary" id="resetButton" type="button">Reset answers</button>
