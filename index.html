@@ -903,7 +903,7 @@
   </main>
 
   <footer>
-    <strong>GTM Diagnostics</strong> · HubSpot Audit Resource · <a href="https://gtmdiagnostics.com">gtmdiagnostics.com</a> · <button class="footer-link" id="cookieSettingsButton" type="button">Cookie settings</button>
+    <strong>GTM Diagnostics</strong> · HubSpot Audit Resource · <a href="https://gtmdiagnostics.com">gtmdiagnostics.com</a> · <button class="footer-link" id="hs_show_banner_button" type="button">Cookie settings</button>
   </footer>
 
   <script>
@@ -1240,7 +1240,7 @@
 
     document.getElementById("printButton").addEventListener("click", printAssessment);
     document.getElementById("printPanelButton").addEventListener("click", printAssessment);
-    document.getElementById("cookieSettingsButton").addEventListener("click", () => {
+    document.getElementById("hs_show_banner_button").addEventListener("click", () => {
       const _hsp = window._hsp = window._hsp || [];
       _hsp.push(["showBanner"]);
     });
