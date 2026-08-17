@@ -19,15 +19,24 @@ The default Pages URL will be:
 
 ## Tracking status
 
-No marketing or analytics tracking code is included yet. Add the Google Tag Manager container only after the consent configuration and production domain have been confirmed.
+The production domain is `https://hubspotchecklist.gtmdiagnostics.com`.
 
-Recommended deployment model:
+The site uses a consent-first tracking model:
 
-- Load HubSpot and Apollo tracking through Google Tag Manager.
-- Use the HubSpot consent banner on the external production domain.
-- Default Google Consent Mode v2 to denied in the relevant regions.
-- Require the appropriate HubSpot consent category before third-party tags fire.
-- Test with Google Tag Assistant, HubSpot tracking diagnostics, Apollo's connection test, and a clean incognito session.
+- HubSpot portal `27209634` is installed directly so its consent banner can load on the external domain.
+- Google Consent Mode v2 defaults analytics and advertising consent to denied.
+- Google Tag Manager container `GTM-KNVS78KV` is requested only after the HubSpot `advertisement` category is explicitly granted.
+- The GTM container currently contains only the Apollo visitor tracker.
+- Consent changes are published to the data layer as `hubspotConsentUpdate`.
+- A Cookie settings control in the footer reopens the HubSpot banner.
+- The GTM `<noscript>` iframe is deliberately omitted because it cannot wait for JavaScript-based consent.
+
+Required platform configuration:
+
+- In HubSpot, target `hubspotchecklist.gtmdiagnostics.com` with a cookie-by-category opt-in banner that includes the Advertisement category.
+- In Apollo Website Visitors, add `https://hubspotchecklist.gtmdiagnostics.com` and use Apollo's connection test.
+- Keep the Apollo script intact inside GTM. The website controls when the container can load.
+- Test acceptance, rejection, and preference changes with Google Tag Assistant, HubSpot tracking diagnostics, Apollo's connection test, and a clean incognito session.
 
 ## Local behavior
 
